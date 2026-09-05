@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GirlIP — Your AI influencer, alive every day</title>
+<style>
+  :root{--bg:#0d0d10;--card:#17171c;--line:#2a2a33;--txt:#ececf1;--dim:#9a9aa8;--acc:#e85d9e;--acc2:#7ee0c3;}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,"PingFang SC","Segoe UI",sans-serif;}
+  body{background:var(--bg);color:var(--txt);line-height:1.6;}
+  .wrap{max-width:720px;margin:0 auto;padding:48px 20px 80px;}
+  .tag{display:inline-block;border:1px solid var(--acc);color:var(--acc);border-radius:999px;padding:2px 14px;font-size:13px;margin-bottom:20px;}
+  h1{font-size:34px;line-height:1.25;margin-bottom:14px;}
+  h1 .g{color:var(--acc);}
+  .sub{color:var(--dim);font-size:17px;margin-bottom:32px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px;}
+  .card h3{font-size:16px;margin-bottom:8px;}
+  .card h3 .n{color:var(--acc2);margin-right:8px;}
+  .card p{color:var(--dim);font-size:14.5px;}
+  h2{font-size:15px;color:var(--acc);margin:34px 0 6px;letter-spacing:.5px;}
+  .zh{color:var(--dim);font-size:14.5px;margin-bottom:24px;}
+  form{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;}
+  label{display:block;font-size:13px;color:var(--dim);margin:12px 0 4px;}
+  input,select{width:100%;background:#0d0d10;border:1px solid var(--line);border-radius:8px;color:var(--txt);padding:10px 12px;font-size:15px;}
+  button{width:100%;margin-top:18px;background:var(--acc);border:none;border-radius:8px;color:#fff;font-size:16px;font-weight:600;padding:13px;cursor:pointer;}
+  #ok{display:none;margin-top:12px;color:var(--acc2);font-size:14px;}
+  .fine{color:var(--dim);font-size:12px;margin-top:14px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">VALIDATION · FOUNDING WAITLIST</span>
+  <h1>Your AI influencer, <span class="g">alive every day.</span></h1>
+  <p class="sub">Pick her face once. Get daily photos and captions that never drift — dressed for the weather, living her own storyline. Built for people who run AI persona accounts, not for one-off image toys.</p>
+
+  <div class="card"><h3><span class="n">01</span>A face that never drifts</h3><p>One casting photo becomes a locked identity: anchor details, outfit-bleed guards, and an automatic similarity QA that rejects a drifted image before you ever see it.</p></div>
+  <div class="card"><h3><span class="n">02</span>Daily autopilot, in her voice</h3><p>Weather-aware outfits, a natural posting rhythm, and captions generated from the same "life event" as the picture — her feed stays coherent instead of becoming a random pretty gallery.</p></div>
+  <div class="card"><h3><span class="n">03</span>Compliant by default</h3><p>Every export carries the AI-content disclosure your platform expects (China's AI labeling rules, Meta/TikTok policies). Your account asset stays alive.</p></div>
+
+  <h2>这是什么 / WHAT THIS IS</h2>
+  <p class="zh">一个给「运营 AI 虚拟人账号」的人用的工作台：锁脸不漂 + 每天自动备好图和文案 + 按平台带 AI 声明。现在处于验证期，正在找 20 位创始内测用户——免费试用内测版，换你狠狠挑刺。</p>
+
+  <form id="f">
+    <label>Email *</label>
+    <input id="email" type="email" required placeholder="you@example.com">
+    <label>What do you run now? 你现在用什么出图/运营？*</label>
+    <input id="tool" required placeholder="e.g. Midjourney / ComfyUI+LoRA / 豆包 / none yet">
+    <label>Hours per week on the account 每周花几小时？*</label>
+    <select id="hours">
+      <option value="<3">less than 3h / 不到 3 小时</option>
+      <option value="3-6">3–6h</option>
+      <option value="6-10">6–10h</option>
+      <option value=">10">more than 10h / 10 小时以上</option>
+    </select>
+    <button type="submit">Join the founding waitlist →</button>
+    <div id="ok">✓ You're in. We'll reach out when the beta opens. / 已加入，内测开放时第一时间找你。</div>
+    <p class="fine">No spam. One email when the beta opens. / 只发一封内测通知，不骚扰。</p>
+  </form>
+</div>
+<script>
+(function(){
+  var aid='';try{aid=localStorage.getItem('girlip_aid')||('a'+Math.random().toString(36).slice(2,10));localStorage.setItem('girlip_aid',aid);}catch(e){}
+  var seen=false;try{seen=!!sessionStorage.getItem('g_seen');sessionStorage.setItem('g_seen','1');}catch(e){}
+  try{fetch('https://job-api.whataicando.site/api/v1/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({events:[{name:seen?'girlip_page_return':'girlip_page_view',props:{ref:(document.referrer||'').slice(0,120)},anon_id:aid}],keepalive:true})}).catch(function(){});}catch(e){}
+})();
+document.getElementById('f').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var email=document.getElementById('email').value.trim();
+  if(!email) return;
+  try{
+    var r=await fetch('https://job-api.whataicando.site/api/v1/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({events:[{name:'girlip_waitlist',props:{email:email,tool_now:document.getElementById('tool').value.trim().slice(0,120),hours_week:document.getElementById('hours').value,src:'landing'}}]})});
+    if(!r.ok) throw 0;
+    document.getElementById('ok').style.display='block';
+    document.querySelector('button').disabled=true;
+  }catch(_){alert('Submit failed, please retry / 提交失败请重试');}
+});
+</script>
+</body>
+</html>
